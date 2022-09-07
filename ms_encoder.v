@@ -19,7 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`define WIDTH 8
+`define WIDTH 40
 `define TOP 16777216 // 2^24
 `define BOTTOM 65536 // 2^16
 `define MAX_RANGE 65536
@@ -53,7 +53,10 @@ module ms_encoder(
     reg [31:0] range;
     reg [31:0] low;
     reg [31:0] size;
-   
+    reg [31:0] freq_cum [0:256];    
+    reg [7:0] symbol;     
+    reg [39:0] data_in;
+    reg finish;
     
      //----- registos BRAM -----//
     reg [15:0] addr;
@@ -63,12 +66,12 @@ module ms_encoder(
     reg [31:0] flush_low;
     
     //----- registos testes -----//
-    
     reg signed [63:0] low_test;
     reg signed [63:0] range_test;
     
+    reg [7:0] symbol_test;
     
-    reg [31:0] freq_cum [0:256];    
+        
     
                                      
     
@@ -89,32 +92,33 @@ module ms_encoder(
             o_flush <= 0;
             count <= 0;
             size <= 0;
+            o_finish_encoder <= 0;
+            //data_in = i_data;
+            //symbol <= i_data;
         end
         else
         begin 
             case(state)
                 `IDLE: begin // 0
-                    o_range <= o_range;                     
+                    o_range <= o_range;
+                    symbol <= i_data[7 +(8*size) -:8];                    
                 end
                  
                 `RC: begin // 1 Calculate new range and range and low values for symbol; 
-                    low <= low + freq_cum[i_data]*(range/freq_cum[256]);
-                    range <= (range/freq_cum[256])*(freq_cum[i_data+1]-freq_cum[i_data]);
+                    low <= low + freq_cum[symbol]*(range/freq_cum[256]);
+                    range <= (range/freq_cum[256])*(freq_cum[symbol+1]-freq_cum[symbol]);
                     flush_low <= flush_low << 8;
                     size <= size + 1;
+                    symbol_test <= symbol;
                     
                 end
                 
                 `UPDATE_FREQ: begin // 2 Update cumulative frequency of encoded symbol
                     for(i=0;i<257;i=i+1)begin // ----- > sintese (ciclo for)
-                        if(i>i_data)
+                        if(i>symbol)
                             freq_cum[i] <= freq_cum[i] + 1;
                     end
-                    
-                     
-                    
-                               
-                end
+                 end
     
                 `REN: begin //3 Check range limits
                     if((low ^(low + range)) < `TOP || (range < `BOTTOM)) begin
@@ -142,22 +146,22 @@ module ms_encoder(
                             freq_cum[i] <= freq_cum[i]<<1;
                         end
                      end
-                     
-                 
+                      
+                    
                 end
                 
                 `FLUSH: begin // 4 Flush the low value data when are no more symbols to encode
-                           
-                    count <= count + 1;
                     o_flush <= low[31-count*8 -:8];
                     o_we<=1;
                     o_addr <= addr + count;
-                                            
+                    count <= count + 1;
+                                          
           
                 end
                 
                 `RESET: begin // 5                   
                     o_we <= 0;
+                   
                 end
     
                 default:
@@ -180,8 +184,12 @@ module ms_encoder(
                 `IDLE: begin
                     if(i_en && (size < i_size)) 
                         state <= `RC;
-                    else
+                    else begin
                         state <= `FLUSH;
+                    end
+                    
+                    if(finish)
+                        state <= `IDLE;
                end
                 `RC: begin
                     state <= `UPDATE_FREQ;
@@ -198,11 +206,12 @@ module ms_encoder(
                 end
                 
                 `FLUSH: begin
-                    if(count<4)
+                    if(count<3) ////// Se der problema, ver aqui!!!!!!
                         state<= `FLUSH;
                     else begin                   
                         state <= `RESET;
                         o_finish_encoder <= 1;
+                        finish <= 1;
                     end                 
                 end
                 
