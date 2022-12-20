@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xBA35796D4E3BE9CC",
+      "boundary_crc": "0x6257A014BBF06CB6",
       "device": "xczu7ev-ffvc1156-2-e",
       "gen_directory": "../../../../octant_core.gen/sources_1/bd/design_v2",
       "name": "design_v2",
@@ -15,16 +15,6 @@
       "octant_core_v2_0": ""
     },
     "ports": {
-      "i_points_y_0": {
-        "direction": "I",
-        "left": "63",
-        "right": "0"
-      },
-      "i_points_z_0": {
-        "direction": "I",
-        "left": "63",
-        "right": "0"
-      },
       "i_en_0": {
         "direction": "I"
       },
@@ -46,11 +36,6 @@
             "value_src": "default"
           }
         }
-      },
-      "i_points_x_0": {
-        "direction": "I",
-        "left": "63",
-        "right": "0"
       },
       "i_mid_point_0": {
         "direction": "I",
@@ -96,6 +81,24 @@
             "value_src": "default"
           }
         }
+      },
+      "o_finish_0": {
+        "direction": "O"
+      },
+      "i_points_y_0": {
+        "direction": "I",
+        "left": "111",
+        "right": "0"
+      },
+      "i_points_x_0": {
+        "direction": "I",
+        "left": "111",
+        "right": "0"
+      },
+      "i_points_z_0": {
+        "direction": "I",
+        "left": "111",
+        "right": "0"
       }
     },
     "components": {
@@ -105,9 +108,6 @@
         "xci_path": "ip/design_v2_blk_mem_gen_0_0/design_v2_blk_mem_gen_0_0.xci",
         "inst_hier_path": "blk_mem_gen_0",
         "parameters": {
-          "Byte_Size": {
-            "value": "8"
-          },
           "Enable_32bit_Address": {
             "value": "false"
           },
@@ -120,6 +120,9 @@
           "Memory_Type": {
             "value": "True_Dual_Port_RAM"
           },
+          "Operating_Mode_B": {
+            "value": "READ_FIRST"
+          },
           "Port_B_Clock": {
             "value": "100"
           },
@@ -130,10 +133,10 @@
             "value": "50"
           },
           "Read_Width_A": {
-            "value": "32"
+            "value": "152"
           },
           "Read_Width_B": {
-            "value": "32"
+            "value": "152"
           },
           "Register_PortA_Output_of_Memory_Primitives": {
             "value": "true"
@@ -141,20 +144,23 @@
           "Register_PortB_Output_of_Memory_Primitives": {
             "value": "true"
           },
+          "Remaining_Memory_Locations": {
+            "value": "0"
+          },
           "Use_Byte_Write_Enable": {
-            "value": "true"
+            "value": "false"
           },
           "Use_RSTA_Pin": {
             "value": "false"
           },
           "Write_Depth_A": {
-            "value": "64"
+            "value": "16"
           },
           "Write_Width_A": {
-            "value": "32"
+            "value": "152"
           },
           "Write_Width_B": {
-            "value": "32"
+            "value": "152"
           },
           "use_bram_block": {
             "value": "Stand_Alone"
@@ -201,17 +207,17 @@
           },
           "i_points_x": {
             "direction": "I",
-            "left": "63",
+            "left": "111",
             "right": "0"
           },
           "i_points_y": {
             "direction": "I",
-            "left": "63",
+            "left": "111",
             "right": "0"
           },
           "i_points_z": {
             "direction": "I",
-            "left": "63",
+            "left": "111",
             "right": "0"
           },
           "i_mid_point": {
@@ -238,33 +244,29 @@
             "direction": "O"
           },
           "o_we_a": {
-            "direction": "O",
-            "left": "3",
-            "right": "0"
+            "direction": "O"
           },
           "o_we_b": {
-            "direction": "O",
-            "left": "3",
-            "right": "0"
+            "direction": "O"
           },
           "o_dina": {
             "direction": "O",
-            "left": "31",
+            "left": "151",
             "right": "0"
           },
           "i_doutb": {
             "direction": "I",
-            "left": "31",
+            "left": "151",
             "right": "0"
           },
           "o_addra": {
             "direction": "O",
-            "left": "5",
+            "left": "3",
             "right": "0"
           },
           "o_addrb": {
             "direction": "O",
-            "left": "5",
+            "left": "3",
             "right": "0"
           },
           "o_ena": {
@@ -373,6 +375,12 @@
         "ports": [
           "octant_core_v2_0/o_enb",
           "blk_mem_gen_0/enb"
+        ]
+      },
+      "octant_core_v2_0_o_finish": {
+        "ports": [
+          "octant_core_v2_0/o_finish",
+          "o_finish_0"
         ]
       },
       "octant_core_v2_0_o_we_a": {
