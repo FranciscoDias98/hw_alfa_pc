@@ -1,0 +1,42 @@
+{
+   "ActiveEmotionalView":"Default View",
+   "Default View_ScaleFactor":"1.0",
+   "Default View_TopLeft":"-331,-78",
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
+#  -string -flagsOSRD
+preplace port port-id_i_clk_0 -pg 1 -lvl 0 -x -20 -y 20 -defaultsOSRD
+preplace port port-id_i_rst_n_0 -pg 1 -lvl 0 -x -20 -y 90 -defaultsOSRD
+preplace port port-id_i_en_0 -pg 1 -lvl 0 -x -20 -y 110 -defaultsOSRD
+preplace portBus i_mid_point_0 -pg 1 -lvl 0 -x -20 -y 210 -defaultsOSRD
+preplace portBus i_near_bottom_left_0 -pg 1 -lvl 0 -x -20 -y 230 -defaultsOSRD
+preplace portBus i_far_top_right_0 -pg 1 -lvl 0 -x -20 -y 250 -defaultsOSRD
+preplace portBus i_point_cloud_size_0 -pg 1 -lvl 0 -x -20 -y 270 -defaultsOSRD
+preplace portBus i_points_x_0 -pg 1 -lvl 0 -x -20 -y 150 -defaultsOSRD
+preplace portBus i_points_y_0 -pg 1 -lvl 0 -x -20 -y 170 -defaultsOSRD
+preplace portBus i_points_z_0 -pg 1 -lvl 0 -x -20 -y 190 -defaultsOSRD
+preplace inst blk_mem_gen_0 -pg 1 -lvl 2 -x 560 -y 300 -defaultsOSRD
+preplace inst octant_core_0 -pg 1 -lvl 1 -x 190 -y 180 -defaultsOSRD
+preplace netloc blk_mem_gen_0_doutb 1 0 2 0 370 N
+preplace netloc i_clk_0_1 1 0 2 0 20 410J
+preplace netloc i_en_0_1 1 0 1 0J 110n
+preplace netloc i_far_top_right_0_1 1 0 1 0J 240n
+preplace netloc i_mid_point_0_1 1 0 1 0J 200n
+preplace netloc i_near_bottom_left_0_1 1 0 1 0J 220n
+preplace netloc i_point_cloud_size_0_1 1 0 1 0J 260n
+preplace netloc i_points_x_0_1 1 0 1 0J 140n
+preplace netloc i_points_y_0_1 1 0 1 0J 160n
+preplace netloc i_points_z_0_1 1 0 1 0J 180n
+preplace netloc i_rst_n_0_1 1 0 1 0J 90n
+preplace netloc octant_core_0_o_addra 1 1 1 420 190n
+preplace netloc octant_core_0_o_addrb 1 1 1 380 210n
+preplace netloc octant_core_0_o_dina 1 1 1 430 170n
+preplace netloc octant_core_0_o_ena 1 1 1 400 230n
+preplace netloc octant_core_0_o_enb 1 1 1 370 250n
+preplace netloc octant_core_0_o_we_b 1 1 1 390 150n
+preplace netloc octant_core_0_o_we_bram 1 1 1 440 130n
+levelinfo -pg 1 -20 190 560 680
+pagesize -pg 1 -db -bbox -sgen -270 -20 680 490
+"
+}
+0
