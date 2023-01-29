@@ -65,14 +65,14 @@ module bfs_core(
     output wire [15:0] aux_table_addrs_1,
     output wire [15:0] aux_table_addrs_0,
     
-    output wire [15:0] stack_0,
-    output wire [15:0] stack_1,
-    output wire [15:0] stack_2,
-    output wire [15:0] stack_3,
-    output wire [15:0] stack_4,
-    output wire [15:0] stack_5,
-    output wire [15:0] stack_6,
-    output wire [15:0] stack_7,
+//    output wire [15:0] stack_0,
+//    output wire [15:0] stack_1,
+//    output wire [15:0] stack_2,
+//    output wire [15:0] stack_3,
+//    output wire [15:0] stack_4,
+//    output wire [15:0] stack_5,
+//    output wire [15:0] stack_6,
+//    output wire [15:0] stack_7,
     
     
     
@@ -189,14 +189,14 @@ module bfs_core(
     assign aux_table_addrs_0 = aux_table_addrs[0];
     
     
-    assign stack_0 = addrs_stack[0];
-    assign stack_1 = addrs_stack[1];
-    assign stack_2 = addrs_stack[2];
-    assign stack_3 = addrs_stack[3];
-    assign stack_4 = addrs_stack[4];
-    assign stack_5 = addrs_stack[5];
-    assign stack_6 = addrs_stack[6];
-    assign stack_7 = addrs_stack[7];
+//    assign stack_0 = addrs_stack[0];
+//    assign stack_1 = addrs_stack[1];
+//    assign stack_2 = addrs_stack[2];
+//    assign stack_3 = addrs_stack[3];
+//    assign stack_4 = addrs_stack[4];
+//    assign stack_5 = addrs_stack[5];
+//    assign stack_6 = addrs_stack[6];
+//    assign stack_7 = addrs_stack[7];
     
     
     assign occ_code_0 = o_occ_code[63-:8];

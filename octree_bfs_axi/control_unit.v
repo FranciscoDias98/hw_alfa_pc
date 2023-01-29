@@ -100,7 +100,7 @@ module control_unit#(
 
                     end else if (i_need_new_points) begin
                         // if octree_core needs more points, alert module_interface 
-                        mod_int_state <= `UPDATING;
+                        mod_int_state <= `READING; //<--------------- MUDEI PARA: READING, ANTES: UPDATING
                     end
                 end
                 `WRITING: begin

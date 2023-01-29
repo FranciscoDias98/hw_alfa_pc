@@ -120,6 +120,7 @@ module octree_core #(parameter MAX_DEPTH = 5)(
     output reg flag_read,
     output reg [2:0] flag_child_exists_counter,
     output reg [15:0] point_count,
+    output reg [7:0] coord_pointer,
     
     output wire signed [15:0] debug_near_bottom_left_x,
     output wire signed [15:0] debug_near_bottom_left_y,
@@ -127,9 +128,9 @@ module octree_core #(parameter MAX_DEPTH = 5)(
     output wire signed [15:0] debug_far_top_right_x,
     output wire signed [15:0] debug_far_top_right_y,
     output wire signed [15:0] debug_far_top_right_z, 
-    output reg signed [15:0] r_mid_x,
-    output reg signed [15:0] r_mid_y,
-    output reg signed [15:0] r_mid_z,
+//    output reg signed [15:0] r_mid_x,
+//    output reg signed [15:0] r_mid_y,
+//    output reg signed [15:0] r_mid_z,
     
     output reg [31:0] octree_side_len,
     
@@ -139,7 +140,8 @@ module octree_core #(parameter MAX_DEPTH = 5)(
     output reg [`ADDR_SIZE-1:0] addra_read_prev,
     output reg [`ADDR_SIZE-1:0] addra_read,
     
-    output reg o_need_new_points
+    output reg o_need_new_points,
+    output reg flag_working
     // ********************** debug *************************
 
     );
@@ -151,7 +153,7 @@ module octree_core #(parameter MAX_DEPTH = 5)(
     reg [4:0] max_depth;                   //  | 16 bit | 16 bit | 16 bit | XXXX |
     
     //reg new coordinates for bounding box
-    reg [7:0] coord_pointer;
+    
 
     reg signed [15:0] near_bottom_left_x;
     reg signed [15:0] near_bottom_left_y;
@@ -161,9 +163,9 @@ module octree_core #(parameter MAX_DEPTH = 5)(
     reg signed [15:0] far_top_right_y;
     reg signed [15:0] far_top_right_z;
 
-//    reg signed [15:0] r_mid_x;
-//    reg signed [15:0] r_mid_y;
-//    reg signed [15:0] r_mid_z;
+    reg signed [15:0] r_mid_x;   
+    reg signed [15:0] r_mid_y;
+    reg signed [15:0] r_mid_z;
     
     //reg [2:0] child_idx;
     reg [7:0] depth;
@@ -353,7 +355,7 @@ module octree_core #(parameter MAX_DEPTH = 5)(
     reg signed [`WIDTH-1:0] y_points;
     reg signed [`WIDTH-1:0] z_points;
     
-    reg flag_working;
+    
 
     //current point
     assign x_point_ = x_points[coord_pointer*16 +:16];
@@ -764,6 +766,7 @@ module octree_core #(parameter MAX_DEPTH = 5)(
                                 coord_pointer <= 0;
                             // track n° of points
                             point_count <= point_count + 1;
+                            //flag_working <= 1;
                             flag_out_of_bounds <= 0;
                         end else begin 
                             o_finish <= 1;
@@ -772,6 +775,7 @@ module octree_core #(parameter MAX_DEPTH = 5)(
                             flag_out_of_bounds <= 0;
                             flag_assert_addr <= 0;
                             flag_child_exists <= 0;
+                            flag_working <= 0;
                         end
 
                         //test debug
@@ -863,11 +867,12 @@ module octree_core #(parameter MAX_DEPTH = 5)(
                 end
                 `CALC_MID: //2
                 begin
-                    if((coord_pointer == 31)&&!flag_working) begin
-                        state <= `INIT;
-                    end else begin
+                    //if((coord_pointer == 31)&&!flag_working) begin
+                        //state <= `INIT;
+                    //end else begin
                         state <= `OCTANT_CHECK;
-                    end
+                    //end
+                    //end
                 end
                 `OCTANT_CHECK: //3
                 begin
@@ -881,7 +886,7 @@ module octree_core #(parameter MAX_DEPTH = 5)(
                 begin
                     if (!i_en) begin
                         state <= `IDLE;
-                    end else if((coord_pointer == 31)&&!flag_working) begin
+                    end else if((coord_pointer == 31)&&(depth==(max_depth+1))) begin
                         state <= `INIT;
                     end else begin
                         state <= `CALC_MID; // if point_count == 32, state <= INIT, para novo conjunto de pontos                                                   

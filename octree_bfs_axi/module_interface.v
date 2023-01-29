@@ -77,6 +77,8 @@ module module_interface#(
     output reg [(32*16)-1:0] o_x_points,
     output reg [(32*16)-1:0] o_y_points,
     output reg [(32*16)-1:0] o_z_points,
+    
+    output reg [7:0] counter,
 
     
 
@@ -109,7 +111,7 @@ module module_interface#(
     //assign o_we = (state == `WRITING && counter1<=15 && only1read) ? 1:
      //0; 
      
-    reg [7:0] counter;                                                                    
+                                                                   
 
 
     // **************************ALFA-Pc Modules ******************** //
